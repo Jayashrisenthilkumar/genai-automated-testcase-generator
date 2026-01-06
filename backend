@@ -10,3 +10,25 @@ def extract_functions(code):
 
     return functions
 
+#generator.py
+def generate_tests(functions):
+    tests = []
+    for func in functions:
+        tests.append(f"def test_{func}():\n    assert True\n")
+    return tests
+#app.py
+from ast_parser import extract_functions
+from test_generator import generate_tests
+
+with open("../sample_code/calculator.py") as f:
+    code = f.read()
+
+functions = extract_functions(code)
+tests = generate_tests(functions)
+
+with open("../generated_tests/test_calculator.py", "w") as f:
+    f.writelines(tests)
+
+print("Test cases generated successfully")
+
+
